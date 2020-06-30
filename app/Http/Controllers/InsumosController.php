@@ -45,28 +45,101 @@ class InsumosController extends Controller
                     return view('Coordinador.InsumosIndex', compact('insumos', 'periodos', 'selecPeriodo'));
                 }
             } else {
-                $selecPeriodo = '0';
-                $periodos = Periodo::all();
-                $insumos = Insumo::orderBy('created_at', 'ASC')->paginate(8);
 
-                return view('Coordinador.InsumosIndex', compact('insumos', 'periodos', 'selecPeriodo'));
+                if ($titulo != '') {
+                    $periodos = Periodo::all();
+                    $insumos = Insumo::where('titulo', 'like', '%' . $titulo . '%')->orderBy('created_at', 'ASC')->paginate(8);
+                    $selecPeriodo = "0";
+
+                    return view('Coordinador.InsumosIndex', compact('insumos', 'periodos', 'selecPeriodo'));
+                } else {
+                    $selecPeriodo = "0";
+                    $periodos = Periodo::all();
+                    $insumos = Insumo::orderBy('created_at', 'ASC')->paginate(8);
+                    return view('Coordinador.InsumosIndex', compact('insumos', 'periodos', 'selecPeriodo'));
+                }
             }
 
         } else {
-            $selecPeriodo = "0";
-            $periodos = Periodo::all();
-            $insumos = Insumo::orderBy('created_at', 'ASC')->paginate(8);
 
-            return view('Coordinador.InsumosIndex', compact('insumos', 'periodos', 'selecPeriodo'));
+            if ($titulo != '') {
+                $periodos = Periodo::all();
+                $insumos = Insumo::where('titulo', 'like', '%' . $titulo . '%')->orderBy('created_at', 'ASC')->paginate(8);
+                $selecPeriodo = "0";
+
+                return view('Coordinador.InsumosIndex', compact('insumos', 'periodos', 'selecPeriodo'));
+            } else {
+                $selecPeriodo = "0";
+                $periodos = Periodo::all();
+                $insumos = Insumo::orderBy('created_at', 'ASC')->paginate(8);
+                return view('Coordinador.InsumosIndex', compact('insumos', 'periodos', 'selecPeriodo'));
+            }
+
+
         }
     }
 
-    public function insumosDocentes()
+    public function insumosDocentes(Request $request)
     {
-        $insumos = Insumo::all();
-        $periodos = Periodo::all();
+        $selecPeriodo = $request->selecPeriodo;
+        $titulo = $request->titulo_buscar;
+        if ($selecPeriodo != null) {
+            if ($selecPeriodo != '0') {
+                if ($titulo != '') {
+                    $periodos = Periodo::all();
+                    $insumos = Insumo::where('id_periodo', $selecPeriodo)->where('titulo', 'like', '%' . $titulo . '%')->orderBy('created_at', 'ASC')->paginate(8);
 
-        return view('Docente.InsumosIndexDocente', compact('insumos', 'periodos'));
+                    return view('Docente.InsumosIndexDocente', compact('insumos', 'periodos', 'selecPeriodo'));
+
+                    //->where('carrera.id', 'like', '%' . $selecCarrera . '%')
+                } else {
+                    $periodos = Periodo::all();
+                    $insumos = Insumo::where('id_periodo', $selecPeriodo)->orderBy('created_at', 'ASC')->paginate(8);
+
+                    return view('Docente.InsumosIndexDocente', compact('insumos', 'periodos', 'selecPeriodo'));
+                }
+            } else {
+
+                if ($titulo != '') {
+                    $hoy = Carbon::now();
+                    $fechaHoy = Carbon::parse($hoy)->format('Y-m-d');
+                    $periodos = Periodo::all();
+                    $insumos = Insumo::where('titulo', 'like', '%' . $titulo . '%')->orderBy('created_at', 'ASC')->paginate(8);
+                    $selecPeriodo = "0";
+
+                    return view('Docente.InsumosIndexDocente', compact('insumos', 'periodos', 'selecPeriodo'));
+                } else {
+                    $selecPeriodo = "0";
+                    $periodos = Periodo::all();
+                    $insumos = Insumo::orderBy('created_at', 'ASC')->paginate(8);
+                    return view('Docente.InsumosIndexDocente', compact('insumos', 'periodos', 'selecPeriodo'));
+                }
+            }
+
+        } else {
+
+            if ($titulo != '') {
+                $hoy = Carbon::now();
+                $fechaHoy = Carbon::parse($hoy)->format('Y-m-d');
+                $periodos = Periodo::all();
+                $insumos = Insumo::where('titulo', 'like', '%' . $titulo . '%')->orderBy('created_at', 'ASC')->paginate(8);
+                $selecPeriodo = "0";
+
+                return view('Coordinador.InsumosCreate', compact('insumos', 'periodos', 'selecPeriodo'));
+            } else {
+                $selecPeriodo = "0";
+                $periodos = Periodo::all();
+                $insumos = Insumo::orderBy('created_at', 'ASC')->paginate(8);
+                return view('Docente.InsumosIndexDocente', compact('insumos', 'periodos', 'selecPeriodo'));
+            }
+        }
+
+
+        //$insumos = Insumo::all();
+        //$periodos = Periodo::all();
+        //$selecPeriodo = '0';
+
+        // return view('Docente.InsumosIndexDocente', compact('insumos', 'periodos','selecPeriodo'));
     }
 
     /**
@@ -79,27 +152,19 @@ class InsumosController extends Controller
         $selecPeriodo = $request->selecPeriodo;
         $titulo = $request->titulo_buscar;
         if ($selecPeriodo != null) {
-
-
             if ($selecPeriodo != '0') {
-
                 if ($titulo != '') {
                     $hoy = Carbon::now();
                     $fechaHoy = Carbon::parse($hoy)->format('Y-m-d');
                     $periodos = Periodo::all();
                     $insumos = Insumo::where('id_periodo', $selecPeriodo)->whereDate('created_at', $fechaHoy)->where('titulo', 'like', '%' . $titulo . '%')->orderBy('created_at', 'ASC')->paginate(8);
-
-
                     return view('Coordinador.InsumosCreate', compact('insumos', 'periodos', 'selecPeriodo'));
-
                     //->where('carrera.id', 'like', '%' . $selecCarrera . '%')
                 } else {
                     $hoy = Carbon::now();
                     $fechaHoy = Carbon::parse($hoy)->format('Y-m-d');
                     $periodos = Periodo::all();
                     $insumos = Insumo::where('id_periodo', $selecPeriodo)->whereDate('created_at', $fechaHoy)->orderBy('created_at', 'ASC')->paginate(8);
-
-
                     return view('Coordinador.InsumosCreate', compact('insumos', 'periodos', 'selecPeriodo'));
                 }
             } else {
@@ -108,7 +173,6 @@ class InsumosController extends Controller
                 $hoy = Carbon::now();
                 $fechaHoy = Carbon::parse($hoy)->format('Y-m-d');
                 $insumos = Insumo::whereDate('created_at', $fechaHoy)->orderBy('created_at', 'ASC')->paginate(8);
-
                 return view('Coordinador.InsumosCreate', compact('insumos', 'periodos', 'selecPeriodo'));
             }
 
@@ -118,6 +182,7 @@ class InsumosController extends Controller
             $hoy = Carbon::now();
             $fechaHoy = Carbon::parse($hoy)->format('Y-m-d');
             $insumos = Insumo::whereDate('created_at', $fechaHoy)->orderBy('created_at', 'ASC')->paginate(8);
+
 
             return view('Coordinador.InsumosCreate', compact('insumos', 'periodos', 'selecPeriodo'));
         }
@@ -142,18 +207,6 @@ class InsumosController extends Controller
 
         ]);
 
-     /*   $reglas = array(
-            'url_pdf' => 'max:5120',
-            'url_doc' => 'max:5120',
-            'url_xls' => 'max:5120'
-        );
-
-        $validar = Validator::make($reglas);
-        if ($validar->fails()) {
-            return view("mensajes.mensaje_error")->withErrors($validar->errors());
-
-        }
-        */
 
         //RUTAS POR DEFECTO QUE SERAN MODIFICADAS EN EL CASO QUE SE EXISTA UN ARCHIVO CARGADO
         $rutaDoc = '';
@@ -176,7 +229,7 @@ class InsumosController extends Controller
         $nombreArchivos = Str::slug($request->titulo, '-');
 
 
-        if(($request->file('url_doc')) || ($request->file('url_pdf'))||($request->file('url_xls'))){
+        if (($request->file('url_doc')) || ($request->file('url_pdf')) || ($request->file('url_xls'))) {
             //VALIDAMOS QUE LOS ARCHIVOS ESTEN CARGADOS
             if ($request->file('url_doc')) {
                 $doc = $request->file('url_doc');
@@ -205,7 +258,7 @@ class InsumosController extends Controller
                 $rutaXls = "storage/insumosDocentes/xls/" . $nombre_xls;
             }
 
-            if ($r1!=null || $r2!=null || $r3!=null) {
+            if ($r1 != null || $r2 != null || $r3 != null) {
                 //ACTUALIZAMOS LAS RUTAS DE LOS ARCHIVOS ADJUNTADOS
                 $insumo->url_doc = $rutaDoc;
                 $insumo->url_xls = $rutaXls;
@@ -219,7 +272,7 @@ class InsumosController extends Controller
             }
 
 
-        }else{
+        } else {
             return redirect()->route('crear-insumos');
         }
 

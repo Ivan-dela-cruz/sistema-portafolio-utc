@@ -131,21 +131,21 @@
                                             <label for="pdf"> PDF</label>
                                             <input type="file" name="url_pdf" id="pdf">
                                             @if($errors->has('url_pdf'))
-                                                <label class="text-danger">{{$errors->first('url_pdf')}} </label>
+                                                <label class="text-danger pdf">{{$errors->first('url_pdf')}} </label>
                                             @endif
                                         </div>
                                         <div class="col-md-4 form-group">
                                             <label for="doc">WORD</label>
                                             <input type="file" name="url_doc" id="doc">
                                             @if($errors->has('url_doc'))
-                                                <label class="text-danger">{{$errors->first('url_doc')}} </label>
+                                                <label class="text-danger doc">{{$errors->first('url_doc')}} </label>
                                             @endif
                                         </div>
                                         <div class="col-md-4 form-group">
                                             <label for="xls">EXCEL</label>
                                             <input type="file" name="url_xls" id="xls">
                                             @if($errors->has('url_xls'))
-                                                <label class="text-danger">{{$errors->first('url_xls')}} </label>
+                                                <label class="text-danger xls">{{$errors->first('url_xls')}} </label>
                                             @endif
                                         </div>
                                     </div><!--Cierre del col-10-->
@@ -231,6 +231,41 @@
         $(document).on('click', '.btn-actualizar', function () {
             alert('actualizar')
         });
+
+        $(document).on('change', '#pdf', function () {
+            /* Valida el tamaño maximo de un archivo adjunto */
+            var sizeByte = $('#pdf')[0].files[0].size;
+            var siezekiloByte = parseInt(sizeByte / 10240);
+
+            if (siezekiloByte > $('#pdf').attr('size')) {
+                alert('El tamaño supera el limite permitido');
+                $(this).val('');
+                return false;
+            }
+        });
+        $(document).on('change', '#doc', function () {
+            /* Valida el tamaño maximo de un archivo adjunto */
+            var sizeByte = $('#doc')[0].files[0].size;
+            var siezekiloByte = parseInt(sizeByte / 10240);
+
+            if (siezekiloByte > $('#doc').attr('size')) {
+                alert('El tamaño supera el limite permitido');
+                $('#doc').val('');
+                return false;
+            }
+        });
+        $(document).on('change', '#xls', function () {
+            /* Valida el tamaño maximo de un archivo adjunto */
+            var sizeByte = $('#xls')[0].files[0].size;
+            var siezekiloByte = parseInt(sizeByte / 10240);
+
+            if (siezekiloByte > $('#xls').attr('size')) {
+                alert('El tamaño supera el limite permitido');
+                $('#xls').val('');
+                return false;
+            }
+        });
+
 
 
     </script>

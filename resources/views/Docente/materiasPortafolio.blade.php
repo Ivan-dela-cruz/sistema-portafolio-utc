@@ -250,20 +250,28 @@
 
                             @else
                                 <td class="text-center">
-                                    <a title="No existe Archivo" href="javascript:void(0);"><img
-                                                src="{{ url('imagenes/pdf.png')}}" style="width:45px; height:55px" ;>
-                                    </a>
 
-                                    <br>
-                                    <button class="btn btn-primary btn-xs" data-target="#modalSubirParametroPorta"
-                                            data-toggle="modal"
-                                            onclick="getIdParametro3('{{$paraPorta->id }}', '{{ $paraPorta->parametro }}')"
-                                            type="button">
+                                    @if($tiempoTares->fecha_fin_portada >= $hoy->toDateString() && $tiempoTares->hora_fin_portada >= $hoy->toTimeString())
+                                        <a title="No existe Archivo" href="javascript:void(0);"><img
+                                                    src="{{ url('imagenes/pdf.png')}}" style="width:45px; height:55px" ;>
+                                        </a>
+
+                                        <br>
+
+                                        <button class="btn btn-primary btn-xs" data-target="#modalSubirParametroPorta"
+                                                data-toggle="modal"
+                                                onclick="getIdParametro3('{{$paraPorta->id }}', '{{ $paraPorta->parametro }}')"
+                                                type="button">
                                         <span class="glyphicon glyphicon-open">
                                             _Subir
                                         </span>
-                                    </button>
+                                        </button>
 
+                                    @else
+                                        <a title="No existe Archivo" href="javascript:void(0);"><img
+                                                    src="{{ url('imagenes/pdf.png')}}" style="width:45px; height:55px" ;>
+                                        </a>
+                                    @endif
                                 </td>
                             @endif
 

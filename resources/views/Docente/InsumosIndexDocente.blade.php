@@ -19,6 +19,36 @@
                                 <div class="col-md-11">
                                     <div id="notificacion-delete"></div>
                                     <div id="id-tab-mat">
+                                        <div class="col-lg-8">
+                                            <form method="GET" action="insumos" role="search">
+                                                <div class="input-group">
+                                                    <input name="titulo_buscar" class="form-control input-lg" placeholder="Nombre del insumo"
+                                                           type="text">
+                                                    <span class="input-group-btn">
+                                                    <select style="width: 130px;" class="form-control input-lg"
+                                                            name="selecPeriodo" id="selecPeriodo">
+                                                        <option value="0" >PERIODO</option>
+                                                        @foreach($periodos as $periodo)
+                                                            <option
+
+                                                                    @if ($periodo->id==$selecPeriodo)
+                                                                    selected
+                                                                    @endif
+
+                                                                    value="{!! $periodo->id !!}">
+
+                                                                {!! $periodo->desde !!} - {!! $periodo->hasta !!}
+
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </span>
+                                                    <span class="input-group-btn">
+                                                    <input class="btn btn-primary btn-lg" value="Buscar" type="submit"/>
+                                                </span>
+                                                </div>
+                                            </form>
+                                        </div>
                                         @include('Docente.tablaInsumosDocentes')
                                     </div>
 

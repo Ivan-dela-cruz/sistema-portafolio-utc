@@ -35,7 +35,7 @@ class PeriodosController extends Controller
         //dd($id);
         //Consulta todos los periodo en forma decendente
         $periodo = DB::table('periodo')->orderBy('id', 'desc')->get();
-        $tiempoTarea = TareaPortafolio::orderBy('created_at','ASC')->paginate(3);
+        $tiempoTarea = TareaPortafolio::orderBy('created_at','ASC')->paginate(12);
 
         $contador = count($idUsuarioActual);
         if ($contador) {
@@ -175,6 +175,69 @@ class PeriodosController extends Controller
         } else {
             return view("mensajes.msj_rechazado")->with("msj", "Hubo un error intente nuevamente ");
         }
+
+
+
+
+       /* $idTarea = $request->input('id_tarea');
+
+        $fecha_fin = $request->input('fecha_fin');
+        $hora_fin = $request->input('hora_fin');
+        $fecha_fin_par = $request->input('fecha_fin_par');
+        $hora_fin_par = $request->input('hora_fin_par');
+
+        $tareaPorta = TareaPortafolio::find($idTarea);
+        $periodo = Periodo::find($idTarea);
+
+        $fechaTareaCreada = Carbon::parse($periodo->created_at)->format('Y-m-d');
+
+        if (isset($tareaPorta)) {
+            if ($fecha_fin >= $fechaTareaCreada && $fecha_fin_par >= $fechaTareaCreada) {
+
+                $tareaPorta->fecha_fin_portada = $fecha_fin;
+                $tareaPorta->hora_fin_portada = $hora_fin;
+                $tareaPorta->fecha_fin_materia = $fecha_fin_par;
+                $tareaPorta->hora_fin_materia = $hora_fin_par;
+                $tareaPorta->save();
+
+                $periodo = $tareaPorta->periodo->desde . ' - ' . $tareaPorta->periodo->hasta;
+                $msj = 'Tiempo de subida de documentos actualizado correctamente';
+
+
+                // return view("mensajes.divTiempo")->with("msj", "Tiempo de subida de documentos actualizado correctamente ")->with('tareaPorta', $tareaPorta);
+            } else {
+                return view("mensajes.msj_rechazado")->with("msj", "No se realizaron cambios la fecha es incorrecta ");
+            }
+
+        } else {
+            return view("mensajes.msj_rechazado")->with("msj", "Hubo un error intente nuevamente ");
+        }
+
+
+
+
+
+
+
+
+        $idUsuarioActual = \Auth::user()->id;
+
+        //dd($id);
+        //Consulta todos los periodo en forma decendente
+        $periodo = DB::table('periodo')->orderBy('id', 'desc')->get();
+        $tiempoTarea = TareaPortafolio::orderBy('created_at','ASC')->paginate(3);
+
+        $contador = count($idUsuarioActual);
+        if ($contador) {
+            return view("Docente.TableTiempo")->with("periodo", $periodo)->with("tiempoTarea", $tiempoTarea);
+        } else {
+            return view("mensajes.msj_rechazado")->with("msj", "No existe registrado ningun Período Académico .");
+        }
+
+
+*/
+
+
     }
 
     public function getTiempoFechaPeriodo(Request $request)

@@ -98,6 +98,8 @@
 </div>
 
 <script type="text/javascript">
+
+
     function limpiarModalActividad() {
         //Limpia el mensaje que aparece ala subir pdf
         document.getElementById("notaSubirActividad").innerHTML = "";

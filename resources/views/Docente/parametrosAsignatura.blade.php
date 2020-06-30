@@ -130,14 +130,18 @@
 
                                     <div class="panel-footer">
                                         @if(!$paraMat->urlArchivo)
-                                            <button class="btn btn-primary btn-xs" data-target="#modalSubirParametroMat"
-                                                    data-toggle="modal"
-                                                    onclick="getIdParametro2('{{$paraMat->id }}', '{{ $paraMat->nombre }}')"
-                                                    type="button">
-                                        <span class="glyphicon glyphicon-open">
-                                            _Subir
-                                        </span>
-                                            </button>
+                                            @if($tiempoTares->fecha_fin_materia >= $hoy->toDateString() && $tiempoTares->hora_fin_materia >= $hoy->toTimeString())
+                                                <button class="btn btn-primary btn-xs"
+                                                        data-target="#modalSubirParametroMat"
+                                                        data-toggle="modal"
+                                                        onclick="getIdParametro2('{{$paraMat->id }}', '{{ $paraMat->nombre }}')"
+                                                        type="button">
+                                                <span class="glyphicon glyphicon-open">
+                                                    _Subir
+                                                </span>
+                                                </button>
+                                            @endif
+
                                         @else
 
                                         <!--  <button class="btn btn-success btn-xs" data-target="#modalSubirParametroMat" data-toggle="modal" onclick="getIdParametro2('{{$paraMat->id }}', '{{ $paraMat->nombre }}')">
@@ -230,14 +234,18 @@
 
                                         <div class="panel-footer">
                                             @if(!$paraProduc->urlArchivo)
-                                                <button class="btn btn-primary btn-xs" data-target="#modalSubirPdf"
-                                                        data-toggle="modal"
-                                                        onclick="getIdParametro('{{$paraProduc->id }}', '{{ $paraProduc->nombre }}')"
-                                                        type="button">
+
+                                                @if($tiempoTares->fecha_fin_materia >= $hoy->toDateString() && $tiempoTares->hora_fin_materia >= $hoy->toTimeString())
+                                                    <button class="btn btn-primary btn-xs" data-target="#modalSubirPdf"
+                                                            data-toggle="modal"
+                                                            onclick="getIdParametro('{{$paraProduc->id }}', '{{ $paraProduc->nombre }}')"
+                                                            type="button">
                                                     <span class="glyphicon glyphicon-open">
                                                         _Subir
                                                     </span>
-                                                </button>
+                                                    </button>
+                                                @endif
+
                                             @else
                                             <!--
                                     <button class="btn btn-success btn-xs" data-target="#modalSubirPdf" data-toggle="modal" onclick="getIdParametro('{{$paraProduc->id }}', '{{ $paraProduc->nombre }}')">
